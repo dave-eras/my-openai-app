@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Call Assistant</title>
+    <script>
+        import { main } from './assistant.js';
+
+async function testMain() {
+    try {
+        const response = await main("Hello");
+        console.log("Test response:", response);
+    } catch (error) {
+        console.error("Test failed:", error);
+    }
+}
+
+testMain();
+    </script>
+</head>
+<body>
+    <button onclick="callAssistant()">Call Assistant</button>
+</body>
+</html>

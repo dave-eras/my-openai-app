@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "openai": "^4.37.1"
+  },
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "my-openai-app",
+  "version": "1.0.0",
+  "main": "assistant.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

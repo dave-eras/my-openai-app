@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Call Assistant</title>
+    <script>
+        function callAssistant() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "http://localhost:3000/activate-assistant", true);
+            xhr.withCredentials = true; // Include this if cookies or auth are involved
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        console.log("Assistant Response:", xhr.responseText);
+                    } else {
+                        console.error("Failed to get a response, status code:", xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+    <button onclick="callAssistant()">Call Assistant</button>
+</body>
+</html>
