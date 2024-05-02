@@ -5,7 +5,14 @@ import { main } from './assistant.js';
 const app = express();
 const port = 3000;
 
-const allowedOrigins = ['https://academy.europa.eu', 'http://localhost:6640', 'http://hairdresser-ai.s3-website.eu-central-1.amazonaws.com'];
+const apiKey = process.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+    console.error('API key is not set in the environment variables.');
+    process.exit(1); // Exit if no API key is found
+}
+
+const allowedOrigins = ['https://academy.europa.eu', 'http://localhost:6640', 'https://olschatbot.site', 'http://hairdresser-ai.s3-website.eu-central-1.amazonaws.com'];
 
 app.use(cors({
     origin: function(origin, callback){

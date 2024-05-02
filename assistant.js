@@ -15,7 +15,7 @@ async function main(userInput) {
 
         const run = await openai.beta.threads.runs.stream(thread.id, {
             assistant_id: assistantId,
-            instructions: "Address the user as 'Sir David' as often as possible."
+            instructions: "Address the user as 'beautiful CLL employee' as often as possible."
         });
 
         return new Promise((resolve, reject) => {
