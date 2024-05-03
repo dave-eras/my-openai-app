@@ -1,34 +1,19 @@
 import express from 'express';
-import https from 'https';
 import http from 'http';
-import fs from 'fs';
 import cors from 'cors';
 import { main } from './assistant.js';
 
 const app = express();
+app.use(cors());
 
-// CORS setup
-const allowedOrigins = ['https://academy.europa.eu', 'http://localhost:6640', 'https://olschatbot.site', 'http://hairdresser-ai.s3-website.eu-central-1.amazonaws.com'];
-app.use(cors({
-    origin: function(origin, callback){
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1){
-            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
-    credentials: true
-}));
-
-// Static files middleware
-app.use(express.static('public'));
-
-// Routes
+// Define your route
 app.get('/', (req, res) => {
-    res.send('Hello, world!');
+  res.send('Hello, world!');
 });
 
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
 
 app.get('/activate-assistant', async (req, res) => {
     const userInput = req.query.input;
@@ -36,8 +21,10 @@ app.get('/activate-assistant', async (req, res) => {
         res.status(400).send("No input provided");
         return;
     }
+    console.log("Received user input:", userInput);
     try {
         const response = await main(userInput);
+        console.log("AI Response:", response);
         res.send(response);
     } catch (error) {
         console.error("Error during processing:", error);
@@ -45,22 +32,17 @@ app.get('/activate-assistant', async (req, res) => {
     }
 });
 
-// HTTPS server
-https.createServer(httpsOptions, app).listen(443, () => {
-    console.log('HTTPS Server running on port 443');
-});
-
-// HTTP server
+// Set up HTTP server on port 80
 http.createServer(app).listen(80, () => {
     console.log('HTTP Server running on port 80');
 });
 
-// Another HTTP server on a different port
+// Also listen on port 3000 for HTTP
 http.createServer(app).listen(3000, () => {
     console.log('HTTP Server running on port 3000');
 });
 
-// Check API Key setup
+// Environment checks
 const apiKey = process.env.OPENAI_API_KEY;
 if (!apiKey) {
     console.error('API key is not set in the environment variables.');
