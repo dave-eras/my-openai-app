@@ -5,6 +5,10 @@ import { main } from './assistant.js';
 const app = express();
 const port = 3000;
 
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+  });
+
 const apiKey = process.env.OPENAI_API_KEY;
 
 if (!apiKey) {
