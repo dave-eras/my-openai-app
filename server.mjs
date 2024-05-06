@@ -4,30 +4,23 @@ import cors from 'cors';
 import { main } from './assistant.js';
 
 const app = express();
-app.use(cors({
-    origin: 'https://olschatbot.site'
-}));
+const corsOptions = {
+    origin: 'https://olschatbot.site',  // This ensures only requests from this origin are allowed.
+    optionsSuccessStatus: 200  // Some legacy browsers (IE11, various SmartTVs) choke on 204.
+};
 
-// Define your route
-app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
+app.use(cors(corsOptions));
 
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
-});
-
+// Your existing routes
 app.get('/activate-assistant', async (req, res) => {
     const userInput = req.query.input;
     if (!userInput) {
         res.status(400).send("No input provided");
         return;
     }
-    console.log("Received user input:", userInput);
     try {
-        const response = await main(userInput);
-        console.log("AI Response:", response);
-        res.send(response);
+        // Your logic here
+        res.send("Response from API");
     } catch (error) {
         console.error("Error during processing:", error);
         res.status(500).send("Error processing request: " + error.message);
