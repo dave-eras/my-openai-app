@@ -4,7 +4,9 @@ import cors from 'cors';
 import { main } from './assistant.js';
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: 'https://olschatbot.site'
+}));
 
 // Define your route
 app.get('/', (req, res) => {
