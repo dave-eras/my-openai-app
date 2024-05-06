@@ -5,13 +5,32 @@ import { main } from './assistant.js';
 
 const app = express();
 const corsOptions = {
-    origin: 'https://olschatbot.site',  // This ensures only requests from this origin are allowed.
-    optionsSuccessStatus: 200  // Some legacy browsers (IE11, various SmartTVs) choke on 204.
+    origin: 'https://olschatbot.site',  // Ensures only requests from this origin are allowed
+    optionsSuccessStatus: 200  // Some legacy browsers choke on 204
 };
 
 app.use(cors(corsOptions));
 
-// Your existing routes
+// Enable pre-flight request for all routes
+app.options('*', cors(corsOptions));
+
+// Custom CORS headers for all responses
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', 'https://olschatbot.site');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    next();
+});
+
+// Define your routes
+app.get('/', (req, res) => {
+  res.send('Hello, world!');
+});
+
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
+
 app.get('/activate-assistant', async (req, res) => {
     const userInput = req.query.input;
     if (!userInput) {
@@ -19,8 +38,8 @@ app.get('/activate-assistant', async (req, res) => {
         return;
     }
     try {
-        // Your logic here
-        res.send("Response from API");
+        const response = await main(userInput);
+        res.send(response);
     } catch (error) {
         console.error("Error during processing:", error);
         res.status(500).send("Error processing request: " + error.message);
