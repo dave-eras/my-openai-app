@@ -2,18 +2,24 @@ import OpenAI from "openai";
 
 const openai = new OpenAI();
 
-async function main(userInput) {
+async function main(userInput, threadId) {
     const assistantId = "asst_T2OQSDgcJmAEV1qnpjLnEIzw";
+
     try {
-        const thread = await openai.beta.threads.create();
-        console.log("Thread created:", thread.id); // Log thread creation
-        const message = await openai.beta.threads.messages.create(thread.id, {
+        // Use the existing threadId instead of creating a new one
+        if (!threadId) {
+            const thread = await openai.beta.threads.create();
+            threadId = thread.id; // Only create a new thread if no threadId is provided
+            console.log("Thread created:", threadId); // Log thread creation
+        }
+
+        const message = await openai.beta.threads.messages.create(threadId, {
             role: "user",
             content: userInput  // Use dynamic input
         });
         console.log("Message sent:", message.id); // Log message sent
 
-        const run = await openai.beta.threads.runs.stream(thread.id, {
+        const run = await openai.beta.threads.runs.stream(threadId, {
             assistant_id: assistantId,
             instructions: "Address the user as 'beautiful CLL employee' as often as possible."
         });

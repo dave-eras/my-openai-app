@@ -1,41 +1,20 @@
-import express from 'express';
-import http from 'http';
-import cors from 'cors';
-import { main } from './assistant.js';
-
 const app = express();
 const corsOptions = {
     origin: 'https://olschatbot.site',  // Ensures only requests from this origin are allowed
+    optionsSuccessStatus: 200  // Some legacy browsers choke on 204
     credentials: true,                 // Allows cookies and credentials to be sent along with the request
     optionsSuccessStatus: 200          // Some legacy browsers choke on 204
 };
 
 app.use(cors(corsOptions));
 
-// Enable pre-flight request for all routes
+
 app.options('*', cors(corsOptions));  // Now correctly configured to respond to pre-flight checks with credentials allowed
 
 // Define your routes
 app.get('/', (req, res) => {
-  res.send('Hello, world!');
-});
 
-app.get('/health', (req, res) => {
-    res.status(200).send('OK');
-});
-
-app.get('/activate-assistant', async (req, res) => {
-    const userInput = req.query.input;
-    if (!userInput) {
-        res.status(400).send("No input provided");
-        return;
-    }
-    try {
-        const response = await main(userInput);
-        res.send(response);
-    } catch (error) {
-        console.error("Error during processing:", error);
-        res.status(500).send("Error processing request: " + error.message);
+@@ -46,6 +39,15 @@ app.get('/activate-assistant', async (req, res) => {
     }
 });
 
@@ -50,8 +29,7 @@ app.use((req, res, next) => {
 
 // Set up HTTP server on port 80
 http.createServer(app).listen(80, () => {
-    console.log('HTTP Server running on port 80');
-});
+    console.log('HTTP Server running on port 80');});
 
 // Also listen on port 3000 for HTTP
 http.createServer(app).listen(3000, () => {
