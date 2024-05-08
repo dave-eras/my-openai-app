@@ -6,7 +6,7 @@
   },
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.mjs"
   },
   "name": "my-openai-app",
   "version": "1.0.0",

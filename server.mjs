@@ -1,3 +1,8 @@
+import express from 'express';
+import http from 'http';
+import cors from 'cors';
+import { main } from './assistant.js';
+
 const app = express();
 const corsOptions = {
     origin: 'https://olschatbot.site',  // Ensures only requests from this origin are allowed
@@ -10,12 +15,11 @@ app.use(cors(corsOptions));
 
 app.options('*', cors(corsOptions));  // Now correctly configured to respond to pre-flight checks with credentials allowed
 
-// Define your routes
-app.get('/', (req, res) => {
-
-@@ -46,6 +39,15 @@ app.get('/activate-assistant', async (req, res) => {
-    }
+app.get('/activate-assistant', async (req, res) => {
+    // Example response to ensure no syntax errors and function body isn't empty
+    res.status(200).send('Activate Assistant Endpoint is working!');
 });
+
 
 // Custom middleware to ensure CORS and Credentials are handled on all responses
 app.use((req, res, next) => {
