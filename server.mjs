@@ -1,7 +1,6 @@
 const app = express();
 const corsOptions = {
     origin: 'https://olschatbot.site',  // Ensures only requests from this origin are allowed
-    optionsSuccessStatus: 200  // Some legacy browsers choke on 204
     credentials: true,                 // Allows cookies and credentials to be sent along with the request
     optionsSuccessStatus: 200          // Some legacy browsers choke on 204
 };
