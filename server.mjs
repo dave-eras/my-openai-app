@@ -30,9 +30,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// Set up HTTP server on port 80
-http.createServer(app).listen(80, () => {
-    console.log('HTTP Server running on port 80');});
 
 // Also listen on port 3000 for HTTP
 http.createServer(app).listen(3000, () => {
