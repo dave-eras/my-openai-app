@@ -36,6 +36,10 @@ http.createServer(app).listen(3000, () => {
     console.log('HTTP Server running on port 3000');
 });
 
+http.createServer(app).listen(80, () => {
+    console.log('HTTP Server running on port 80');
+});
+
 // Environment checks
 const apiKey = process.env.OPENAI_API_KEY;
 if (!apiKey) {
