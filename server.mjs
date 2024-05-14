@@ -11,7 +11,7 @@ const allowedOrigins = ['https://olschatbot.site', 'http://localhost:6640'];
 // Configure CORS dynamically
 const corsOptions = {
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
             callback(new Error('Not allowed by CORS'));
@@ -54,11 +54,20 @@ app.use((req, res, next) => {
     next();
 });
 
-const port = process.env.PORT || 3000;
-http.createServer(app).listen(port, () => {
-    console.log(`HTTP Server running on port ${port}`);
+// Set the primary port
+const primaryPort = process.env.PORT || 3000;
+http.createServer(app).listen(primaryPort, () => {
+    console.log(`HTTP Server running on port ${primaryPort}`);
 });
 
+// Optionally set up server to listen on port 80 as well
+http.createServer(app).listen(80, () => {
+    console.log('HTTP Server running on port 80');
+});
 
 // Environment checks
-const apiKey = process.env.OPENAI_API_K
+const apiKey = process.env.OPENAI_API_KEY;
+if (!apiKey) {
+    console.error('API key is not set in the environment variables.');
+    process.exit(1); // Exit if no API key is found
+}
