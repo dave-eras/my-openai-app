@@ -21,15 +21,7 @@ async function main(userInput, threadId) {
 
         const run = await openai.beta.threads.runs.stream(threadId, {
             assistant_id: assistantId,
-            instructions: "",
-            name: "Kitty",
-            tools: [{"type": "file_search"}],
-            model: "gpt-4-turbo",
-            tool_resources: {
-                file_search: {
-                  vector_store_ids: ["vs_CUU5irHALJKKxrdHp57TyXfF"]
-                }
-            },
+            instructions: "Address the user as 'beautiful CLL employee' as often as possible."
         });
 
         return new Promise((resolve, reject) => {

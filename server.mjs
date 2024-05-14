@@ -55,9 +55,8 @@ app.use((req, res, next) => {
 });
 
 // Set the primary port
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+http.createServer(app).listen(3000, () => {
+    console.log('HTTP Server running on port 3000');
 });
 
 // Optionally set up server to listen on port 80 as well
