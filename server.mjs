@@ -1,7 +1,7 @@
 import express from 'express';
 import http from 'http';
 import cors from 'cors';
-import { main } from './assistant.js';
+import { main } from './assistant2.js';
 
 const app = express();
 
