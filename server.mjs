@@ -11,10 +11,11 @@ const allowedOrigins = ['https://olschatbot.site', 'http://localhost:6641'];
 // Configure CORS dynamically
 const corsOptions = {
     origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
+        // Check if the origin is in the allowed list or is any localhost origin
+        if (!origin || allowedOrigins.includes(origin) || /^http:\/\/localhost:\d+$/.test(origin)) {
+            callback(null, true); // Allow CORS for this request
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(new Error('Not allowed by CORS')); // Reject this request
         }
     },
     credentials: true,
