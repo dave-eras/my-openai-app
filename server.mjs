@@ -6,7 +6,7 @@ import { main } from './assistant.js';
 const app = express();
 
 // Define a list of allowed origins
-const allowedOrigins = ['https://olschatbot.site', 'http://localhost:6641'];
+const allowedOrigins = ['https://olschatbot.site'];
 
 // Configure CORS dynamically
 const corsOptions = {

@@ -10,7 +10,7 @@
   },
   "name": "my-openai-app",
   "version": "1.0.0",
-  "main": "assistant.js",
+  "main": "assistant2.js",
   "keywords": [],
   "author": "",
   "license": "ISC",
