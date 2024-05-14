@@ -37,4 +37,4 @@ if (run.status === 'completed') {
 } else {
   console.log(run.status);
 }
-main();
+export { main };
