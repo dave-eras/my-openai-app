@@ -3,7 +3,7 @@ import OpenAI from "openai";
 const openai = new OpenAI();
 
 async function main(userInput, threadId) {
-    const assistantId = "asst_T2OQSDgcJmAEV1qnpjLnEIzw";
+    const assistantId = "asst_SeBp3ArJgZEbTbG2RutkGMZ6";
 
     try {
         // Use the existing threadId instead of creating a new one
@@ -21,7 +21,15 @@ async function main(userInput, threadId) {
 
         const run = await openai.beta.threads.runs.stream(threadId, {
             assistant_id: assistantId,
-            instructions: "Address the user as 'beautiful CLL employee' as often as possible."
+            instructions: "",
+            name: "Kitty",
+            tools: [{"type": "file_search"}],
+            model: "gpt-4-turbo",
+            tool_resources: {
+                file_search: {
+                  vector_store_ids: ["vs_CUU5irHALJKKxrdHp57TyXfF"]
+                }
+            },
         });
 
         return new Promise((resolve, reject) => {
